@@ -5,7 +5,6 @@ const Practice = () => {
   const [array, setArray] = useState("");
   const [displayOption, setDisplayOption] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
 
   const positions = [
@@ -42,7 +41,6 @@ const Practice = () => {
       item.every((item1) => array[item1] == selectedItem)
     );
     if (result) {
-      setButtonDisabled(true);
       setSuccessMessage("You Won The Game");
     }
   };
@@ -55,7 +53,7 @@ const Practice = () => {
     setSuccessMessage("");
     setArray("");
   }, []);
-
+console.log(successMessage)
   return (
     <div className="game-container">
       <h1 className="game-title">Welcome To The World of Tic Tac Toe</h1>
@@ -82,7 +80,7 @@ const Practice = () => {
                 return (
                   <div key={index} className="grid-item">
                     <button
-                      disabled={buttonDisabled}
+                      disabled={successMessage}
                       className="option-btn"
                       onClick={() => handleClick(index, displayOption)}
                     >
