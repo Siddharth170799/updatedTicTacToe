@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import data from "./Data";
 
 const Practice = () => {
-  const [array, setArray] = useState("");
+  const [array, setArray] = useState([]);
   const [displayOption, setDisplayOption] = useState("");
   const [selectedItem, setSelectedItem] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -23,7 +23,7 @@ const Practice = () => {
     setArray(newArray);
     setSelectedItem(item3);
 
-    const data2 = array ? array : newArray;
+    const data2 = array.length > 0 ? array : newArray;
     const data1 = data2.map((item, index3) => {
       return index3 == index1 ? item3 : item;
     });
@@ -40,8 +40,17 @@ const Practice = () => {
     const result = positions.some((item) =>
       item.every((item1) => array[item1] == selectedItem)
     );
+ 
     if (result) {
       setSuccessMessage("You Won The Game");
+      return;
+    }
+    if (array.length > 0) {
+      const details = array?.every((item) => item);
+
+      if (details) {
+        setSuccessMessage("Game Ended In a Draw");
+      }
     }
   };
 
@@ -51,9 +60,9 @@ const Practice = () => {
 
   const startOver1 = useCallback(() => {
     setSuccessMessage("");
-    setArray("");
+    setArray([]);
   }, []);
-console.log(successMessage)
+
   return (
     <div className="game-container">
       <h1 className="game-title">Welcome To The World of Tic Tac Toe</h1>
@@ -63,7 +72,7 @@ console.log(successMessage)
         {successMessage}
       </div>
       <div className="grid-container">
-        {array
+        {array.length > 0
           ? array.map((item, index) => {
               if (item != null) {
                 return (
